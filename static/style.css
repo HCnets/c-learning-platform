@@ -1,0 +1,175 @@
+:root {
+  --bg: #f7f7f5;
+  --panel: #ffffff;
+  --border: #e2e2dd;
+  --text: #1f2328;
+  --muted: #6b7280;
+  --accent: #1a7f37;
+  --accent-soft: #e6f4ea;
+  --danger: #c0392b;
+  --danger-soft: #fdecea;
+  --warn: #b45309;
+  --warn-soft: #fef3e2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+.brand { font-weight: 600; }
+.stats { display: flex; gap: 16px; font-size: 13px; color: var(--muted); }
+
+.wrap { flex: 1; display: flex; min-height: 0; }
+
+/* 左侧课程树 */
+#tree {
+  width: 280px;
+  min-width: 280px;
+  overflow-y: auto;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 10px;
+}
+.chapter { margin-bottom: 12px; }
+.chapter-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 6px;
+}
+.chapter-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  margin: 4px 6px 6px;
+  overflow: hidden;
+}
+.chapter-bar > i { display: block; height: 100%; background: var(--accent); transition: width .3s; }
+.lesson {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+}
+.lesson:hover { background: #f0f0ec; }
+.lesson.active { background: var(--accent-soft); }
+.lesson .check {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+  background: #fff;
+}
+.lesson.done .check { background: var(--accent); border-color: var(--accent); color: #fff; }
+.lesson .score {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+  background: #f0f0ec;
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+.lesson .score.hot { background: var(--accent-soft); color: var(--accent); }
+
+/* 右侧主区 */
+#lesson-view { flex: 1; display: flex; flex-direction: column; min-width: 0; padding: 18px 24px; }
+.lesson-head { margin-bottom: 12px; }
+#lesson-title { font-size: 20px; }
+.muted { color: var(--muted); font-size: 13px; }
+
+.toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+.btn {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn:hover { background: #f0f0ec; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { background: #14652d; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.done-toggle { margin-left: auto; font-size: 14px; display: flex; gap: 6px; align-items: center; cursor: pointer; }
+#save-hint { font-size: 12px; }
+
+#code {
+  flex: 1;
+  min-height: 240px;
+  font-family: Consolas, "Cascadia Code", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  resize: none;
+  background: #fcfcfa;
+  tab-size: 4;
+}
+#code:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+
+#stdin-box { margin: 10px 0; }
+#stdin-box summary { cursor: pointer; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+#stdin {
+  width: 100%;
+  font-family: Consolas, monospace;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  resize: vertical;
+}
+
+#result { margin-top: 4px; font-size: 13px; }
+#result .block {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background: var(--panel);
+}
+#result .block h4 { font-size: 13px; margin-bottom: 6px; }
+#result pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: Consolas, monospace;
+  font-size: 12.5px;
+  background: #f4f4f1;
+  border-radius: 6px;
+  padding: 8px 10px;
+  max-height: 260px;
+  overflow: auto;
+}
+#result .ok { color: var(--accent); }
+#result .fail { color: var(--danger); }
+#result .pass-badge { color: var(--accent); font-weight: 600; }
+#result .fail-badge { color: var(--danger); font-weight: 600; }
+.test-row { display: flex; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--border); }
+.test-row:last-child { border-bottom: none; }
+.test-name { min-width: 120px; }
+.hidden { display: none; }

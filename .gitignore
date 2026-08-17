@@ -1,0 +1,13 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+
+# 判题产物
+data/build/
+data/progress.db
+
+# 系统
+Thumbs.db
+.DS_Store

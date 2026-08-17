@@ -1,0 +1,17 @@
+[
+  {
+    "name": "hello",
+    "input": "hello\n",
+    "expected": "5\n"
+  },
+  {
+    "name": "单个字符",
+    "input": "a\n",
+    "expected": "1\n"
+  },
+  {
+    "name": "空串",
+    "input": "\\n",
+    "expected": "0\n"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "5!",
+    "input": "5\n",
+    "expected": "120\n"
+  },
+  {
+    "name": "0!",
+    "input": "0\n",
+    "expected": "1\n"
+  },
+  {
+    "name": "12!",
+    "input": "12\n",
+    "expected": "479001600\n"
+  }
+]

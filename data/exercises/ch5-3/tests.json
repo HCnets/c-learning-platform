@@ -1,0 +1,22 @@
+[
+  {
+    "name": "素数 7",
+    "input": "7\n",
+    "expected": "Yes\n"
+  },
+  {
+    "name": "素数 2",
+    "input": "2\n",
+    "expected": "Yes\n"
+  },
+  {
+    "name": "合数 9",
+    "input": "9\n",
+    "expected": "No\n"
+  },
+  {
+    "name": "合数 10000",
+    "input": "10000\n",
+    "expected": "No\n"
+  }
+]

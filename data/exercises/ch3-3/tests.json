@@ -1,0 +1,22 @@
+[
+  {
+    "name": "优秀 95",
+    "input": "95\n",
+    "expected": "A\n"
+  },
+  {
+    "name": "良好 80",
+    "input": "80\n",
+    "expected": "B\n"
+  },
+  {
+    "name": "及格 60",
+    "input": "60\n",
+    "expected": "D\n"
+  },
+  {
+    "name": "不及格 59",
+    "input": "59\n",
+    "expected": "E\n"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "沸点 212",
+    "input": "212\n",
+    "expected": "100\n"
+  },
+  {
+    "name": "冰点 32",
+    "input": "32\n",
+    "expected": "0\n"
+  },
+  {
+    "name": "常温 100",
+    "input": "100\n",
+    "expected": "37\n"
+  }
+]

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C 语言学习平台</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand">C 语言学习平台</div>
+  <div class="stats">
+    <span id="stat-done">已学完 0/0</span>
+    <span id="stat-score">平均分 --</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside id="tree"></aside>
+
+  <main id="lesson-view">
+    <div class="lesson-head">
+      <h2 id="lesson-title">选择左侧课时开始学习</h2>
+      <p id="lesson-desc" class="muted"></p>
+    </div>
+
+    <div class="toolbar">
+      <button id="btn-save" class="btn">保存</button>
+      <button id="btn-run" class="btn">运行（手动输入）</button>
+      <button id="btn-judge" class="btn primary">判题</button>
+      <label class="done-toggle">
+        <input type="checkbox" id="chk-done"> 标记学完
+      </label>
+      <span id="save-hint" class="muted"></span>
+    </div>
+
+    <textarea id="code" spellcheck="false" placeholder="// 在这里编写 C 代码"></textarea>
+
+    <details id="stdin-box">
+      <summary>手动输入（可选，程序 scanf 时使用）</summary>
+      <textarea id="stdin" spellcheck="false" rows="3" placeholder="例如：10&#10;"></textarea>
+    </details>
+
+    <div id="result" class="hidden"></div>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "样例",
+    "input": "3\nAlice 90\nBob 80\nCindy 100\n",
+    "expected": "90\n"
+  },
+  {
+    "name": "平均为小数",
+    "input": "2\nA 90\nB 91\n",
+    "expected": "90\n"
+  },
+  {
+    "name": "n=1",
+    "input": "1\nSolo 60\n",
+    "expected": "60\n"
+  }
+]
