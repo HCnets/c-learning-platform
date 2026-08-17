@@ -69,4 +69,25 @@ for path, tag in [("/", "index"), ("/app.js", "app.js"), ("/style.css", "style.c
 p = get("/api/lesson/ch4-4")["progress"]
 test("进度持久化", p["best_score"] == 100)
 
+# 8. 多语言判题（Python）
+py_code = "n = int(input())\nprint(sum(range(1, n + 1)))\n"
+r = post("/api/lesson/py1-2/judge", {"code": py_code})
+test("Python 判题满分", r["compile"]["ok"] and r["score"] == 100, f"({r['score']} 分)")
+
+# 9. 重置模板
+r = post("/api/lesson/ch1-1/reset", {})
+test("重置模板", r["ok"] and "include" in r["code"])
+
+# 10. 并发判题安全：8 个同时提交互不串号
+import concurrent.futures as cf
+
+def sub(i):
+    ok_code = correct if i % 2 == 0 else wrong
+    r = post("/api/lesson/ch4-4/judge", {"code": ok_code})
+    return r["score"] == (100 if i % 2 == 0 else 0)
+
+with cf.ThreadPoolExecutor(max_workers=8) as pool:
+    results = list(pool.map(sub, range(8)))
+test("并发判题无串号", all(results), f"({results.count(True)}/8 正确)")
+
 print("\n全部测试通过 ✅")

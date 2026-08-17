@@ -65,8 +65,9 @@ async function selectLesson(id) {
   const data = await api(`/api/lesson/${id}`);
   const { lesson, code, progress } = data;
 
+  const langBadge = data.language && data.language !== "c" ? ` · 语言：${data.language}` : "";
   $("lesson-title").textContent = `${lesson.title}`;
-  $("lesson-desc").textContent = `课时 ID: ${lesson.id}${data.tests.length ? ` · 测试用例 ${data.tests.length} 个（判题满分 100）` : " · 无测试用例，可手动运行验证"}`;
+  $("lesson-desc").textContent = `课时 ID: ${lesson.id}${langBadge}${data.tests.length ? ` · 测试用例 ${data.tests.length} 个（判题满分 100）` : " · 无测试用例，可用\"运行\"手动验证"}`;
   $("code").value = code || `/* ${lesson.title} */\n#include <stdio.h>\n\nint main(void)\n{\n    return 0;\n}\n`;
   $("chk-done").checked = !!progress?.done;
   $("result").classList.add("hidden");
@@ -77,15 +78,32 @@ async function selectLesson(id) {
 /* ---------- 操作 ---------- */
 
 async function save() {
-  await api(`/api/lesson/${state.current}/code`, {
-    method: "PUT",
-    body: JSON.stringify({ code: $("code").value }),
-  });
-  $("save-hint").textContent = "已保存 ✓";
-  setTimeout(() => ($("save-hint").textContent = ""), 2000);
+  try {
+    await api(`/api/lesson/${state.current}/code`, {
+      method: "PUT",
+      body: JSON.stringify({ code: $("code").value }),
+    });
+    $("save-hint").textContent = "已保存 ✓";
+  } catch {
+    $("save-hint").textContent = "保存失败（服务未启动？）";
+  }
+  setTimeout(() => ($("save-hint").textContent = ""), 2500);
 }
 
 $("btn-save").onclick = save;
+
+$("btn-reset").onclick = async () => {
+  if (!state.current) return;
+  if (!confirm("恢复为初始模板？当前代码会被替换。")) return;
+  try {
+    const r = await api(`/api/lesson/${state.current}/reset`, { method: "POST" });
+    $("code").value = r.code;
+    $("save-hint").textContent = "已恢复初始模板";
+    setTimeout(() => ($("save-hint").textContent = ""), 2500);
+  } catch {
+    $("save-hint").textContent = "该课时没有初始模板";
+  }
+};
 
 $("btn-run").onclick = async () => {
   if (!state.current) return;
@@ -122,11 +140,16 @@ $("btn-judge").onclick = async () => {
 
 $("chk-done").onchange = async () => {
   if (!state.current) return;
-  await api(`/api/lesson/${state.current}/done`, {
-    method: "POST",
-    body: JSON.stringify({ done: $("chk-done").checked }),
-  });
-  renderTree();
+  try {
+    await api(`/api/lesson/${state.current}/done`, {
+      method: "POST",
+      body: JSON.stringify({ done: $("chk-done").checked }),
+    });
+    renderTree();
+  } catch {
+    $("chk-done").checked = !$("chk-done").checked; // 失败回滚
+    $("save-hint").textContent = "标记失败（服务未启动？）";
+  }
 };
 
 function renderJudge(r) {
@@ -136,6 +159,12 @@ function renderJudge(r) {
       <div class="block">
         <h4 class="fail">编译失败 · 得分 0</h4>
         <pre>${esc(r.compile.output)}</pre>
+      </div>`;
+  } else if (!r.total) {
+    html = `
+      <div class="block">
+        <h4>编译通过</h4>
+        <p class="muted">该课时没有测试用例，试试"运行"手动验证，或在 tests.json 里添加用例。</p>
       </div>`;
   } else {
     const rows = r.tests.map((t) => `
@@ -149,7 +178,7 @@ function renderJudge(r) {
       <div class="block">
         <h4>判题结果：<span class="${r.score === 100 ? "pass-badge" : r.passed > 0 ? "ok" : "fail-badge"}">${r.score} 分</span>
         <span class="muted">（通过 ${r.passed}/${r.total} 个用例）</span></h4>
-        ${r.total ? rows : '<p class="muted">该课时没有测试用例，试试"运行"手动验证。</p>'}
+        ${rows}
       </div>`;
   }
   showResult(html);

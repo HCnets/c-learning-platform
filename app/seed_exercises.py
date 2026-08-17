@@ -1,4 +1,4 @@
-"""生成练习文件：每个课时一个 main.c 模板，部分课时附 tests.json 测试用例。
+"""生成练习文件：每个课时一个 main 模板（源码 + template 备份），部分课时附 tests.json。
 
 用法：python -m app.seed_exercises   （可重复运行，不会覆盖已有代码）
 """
@@ -9,6 +9,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE))
 
+from app.judge import LANGUAGES  # noqa: E402
 from app.main import EXERCISES, load_lessons  # noqa: E402
 
 TEMPLATE = """\
@@ -307,6 +308,23 @@ int main(void)
         {"name": "平均为小数", "input": "2\nA 90\nB 91\n", "expected": "90\n"},
         {"name": "n=1", "input": "1\nSolo 60\n", "expected": "60\n"},
     ]),
+
+    # ---- Python 扩展示例（多语言判题演示）----
+
+    "py1-2": ("""\
+# 计算 1 + 2 + ... + n 的和（Python 版）
+# 输入：一个整数 n
+# 输出：累加和
+# 例：输入 10，输出 55
+n = int(input())
+
+# TODO: 计算并输出 1 到 n 的累加和
+
+""", [
+        {"name": "n=10", "input": "10\n", "expected": "55\n"},
+        {"name": "n=100", "input": "100\n", "expected": "5050\n"},
+        {"name": "n=1", "input": "1\n", "expected": "1\n"},
+    ]),
 }
 
 
@@ -317,15 +335,22 @@ def main():
         for lesson in chapter["lessons"]:
             workdir = EXERCISES / lesson["id"]
             workdir.mkdir(parents=True, exist_ok=True)
+            lang = lesson.get("language") or chapter.get("language") or "c"
+            ext = LANGUAGES[lang]["ext"]
 
             spec = EXERCISE_SPECS.get(lesson["id"])
             if spec is not None:
                 template, tests = spec
             else:
-                template = TEMPLATE.format(title=lesson["title"])
+                if lang == "python":
+                    template = f"# {lesson['title']}\n# 在这里编写你的 Python 代码\n\n"
+                else:
+                    template = TEMPLATE.format(title=lesson["title"])
                 tests = []
 
-            code_file = workdir / "main.c"
+            # template 备份（供"重置模板"恢复），main 是用户当前代码
+            (workdir / f"template.{ext}").write_text(template, encoding="utf-8")
+            code_file = workdir / f"main.{ext}"
             if not code_file.exists():
                 code_file.write_text(template, encoding="utf-8")
                 created += 1
@@ -335,7 +360,7 @@ def main():
                     json.dumps(tests, ensure_ascii=False, indent=2), encoding="utf-8"
                 )
 
-    print(f"seed 完成：生成 {created} 个 main.c 模板，{len(EXERCISE_SPECS)} 个课时带测试用例")
+    print(f"seed 完成：生成 {created} 个 main 模板，{len(EXERCISE_SPECS)} 个课时带测试用例")
 
 
 if __name__ == "__main__":

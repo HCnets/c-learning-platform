@@ -1,0 +1,10 @@
+# 统一行尾策略：源码 LF，批处理 CRLF（Windows 专用）
+* text=auto
+*.c text eol=lf
+*.h text eol=lf
+*.py text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.bat text eol=crlf

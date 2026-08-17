@@ -1,0 +1,1 @@
+[{"name": "及格", "input": "80\n", "expected": "及格\n"}, {"name": "不及格", "input": "40\n", "expected": "不及格\n"}]

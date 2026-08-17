@@ -1,32 +1,37 @@
-"""C 语言学习平台后端：课程数据 + 进度跟踪(SQLite) + C 判题。
+"""C/Python 语言学习平台后端：课程数据 + 进度跟踪(SQLite) + 多语言判题。
 
 启动：uv run uvicorn app.main:app --reload --port 8000
-（或 .venv 激活后：uvicorn app.main:app --reload）
+（测试时可用环境变量 CPLATFORM_DB 指定临时数据库）
 """
 import json
+import os
 import sqlite3
 import time
+from contextlib import asynccontextmanager, contextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from .judge import EXERCISES, judge, load_tests, run_manual
+from .judge import EXERCISES, LANGUAGES, judge, lesson_lang, load_tests, run_manual
 
 BASE = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE / "data"
-DB_PATH = DATA_DIR / "progress.db"
-
-app = FastAPI(title="C 语言学习平台")
+DB_PATH = Path(os.environ.get("CPLATFORM_DB", str(DATA_DIR / "progress.db")))
 
 
 # ---------- 数据库 ----------
 
+@contextmanager
 def get_db():
     con = sqlite3.connect(DB_PATH)
     con.row_factory = sqlite3.Row
-    return con
+    try:
+        with con:  # 提交/回滚
+            yield con
+    finally:
+        con.close()
 
 
 def init_db():
@@ -43,9 +48,13 @@ def init_db():
         """)
 
 
-@app.on_event("startup")
-def _startup():
+@asynccontextmanager
+async def lifespan(_: FastAPI):
     init_db()
+    yield
+
+
+app = FastAPI(title="C 语言学习平台", lifespan=lifespan)
 
 
 # ---------- 课程数据 ----------
@@ -60,6 +69,12 @@ def get_lesson(lesson_id: str) -> dict | None:
             if lesson["id"] == lesson_id:
                 return lesson
     return None
+
+
+def code_path(lesson_id: str) -> Path:
+    """课时源码文件路径，扩展名随语言（c -> main.c，python -> main.py）。"""
+    lang = lesson_lang(lesson_id, load_lessons())
+    return EXERCISES / lesson_id / f"main.{LANGUAGES[lang]['ext']}"
 
 
 # ---------- API ----------
@@ -95,10 +110,11 @@ def api_lesson(lesson_id: str):
     lesson = get_lesson(lesson_id)
     if lesson is None:
         raise HTTPException(404, "课时不存在")
-    workdir = EXERCISES / lesson_id
-    code = (workdir / "main.c").read_text(encoding="utf-8") if (workdir / "main.c").exists() else None
+    p = code_path(lesson_id)
+    code = p.read_text(encoding="utf-8") if p.exists() else None
     return {
         "lesson": lesson,
+        "language": lesson_lang(lesson_id, load_lessons()),
         "code": code,
         "tests": load_tests(lesson_id),
         "progress": _progress_map().get(lesson_id),
@@ -109,17 +125,37 @@ def api_lesson(lesson_id: str):
 def api_save_code(lesson_id: str, body: CodeIn):
     if get_lesson(lesson_id) is None:
         raise HTTPException(404, "课时不存在")
-    workdir = EXERCISES / lesson_id
-    workdir.mkdir(parents=True, exist_ok=True)
-    (workdir / "main.c").write_text(body.code, encoding="utf-8")
+    p = code_path(lesson_id)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(body.code, encoding="utf-8")
     return {"ok": True}
+
+
+@app.post("/api/lesson/{lesson_id}/reset")
+def api_reset(lesson_id: str):
+    """把课时代码恢复为初始模板。"""
+    if get_lesson(lesson_id) is None:
+        raise HTTPException(404, "课时不存在")
+    template = EXERCISES / lesson_id / "template.c"
+    template_py = EXERCISES / lesson_id / "template.py"
+    if template.exists():
+        code = template.read_text(encoding="utf-8")
+    elif template_py.exists():
+        code = template_py.read_text(encoding="utf-8")
+    else:
+        raise HTTPException(404, "该课时没有初始模板")
+    p = code_path(lesson_id)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(code, encoding="utf-8")
+    return {"ok": True, "code": code}
 
 
 @app.post("/api/lesson/{lesson_id}/judge")
 def api_judge(lesson_id: str, body: CodeIn):
     if get_lesson(lesson_id) is None:
         raise HTTPException(404, "课时不存在")
-    result = judge(lesson_id, body.code)
+    lang = lesson_lang(lesson_id, load_lessons())
+    result = judge(lesson_id, body.code, lang)
     if result["score"] >= 0:
         with get_db() as con:
             row = con.execute("SELECT * FROM progress WHERE lesson_id=?", (lesson_id,)).fetchone()
@@ -140,7 +176,8 @@ def api_judge(lesson_id: str, body: CodeIn):
 def api_run(lesson_id: str, body: RunIn):
     if get_lesson(lesson_id) is None:
         raise HTTPException(404, "课时不存在")
-    return run_manual(lesson_id, body.code, body.input)
+    lang = lesson_lang(lesson_id, load_lessons())
+    return run_manual(lesson_id, body.code, body.input, lang)
 
 
 @app.post("/api/lesson/{lesson_id}/done")

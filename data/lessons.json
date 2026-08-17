@@ -109,6 +109,15 @@
         {"id": "ch12-2", "title": "12-2 编译预处理"},
         {"id": "ch12-3", "title": "12-3 大程序组织"}
       ]
+    },
+    {
+      "id": "py1",
+      "title": "Python 入门（多语言扩展示例）",
+      "language": "python",
+      "lessons": [
+        {"id": "py1-1", "title": "py1-1 第一个 Python 程序"},
+        {"id": "py1-2", "title": "py1-2 练习：计算 1 到 n 的和"}
+      ]
     }
   ]
 }
