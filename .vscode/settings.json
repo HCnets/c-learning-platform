@@ -5,5 +5,9 @@
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true
   },
-  "ruff.lint.run": "onSave"
+  "ruff.lint.run": "onSave",
+  "code-runner.executorMap": {
+    "c": "cd $dir && set PATH=C:\\msys64\\ucrt64\\bin;%PATH% && C:/msys64/ucrt64/bin/gcc.exe -std=c11 -Wall -Wextra $fileName -o $dir/$fileNameWithoutExt.exe && $dir/$fileNameWithoutExt.exe",
+    "python": "cd $dir && python $fileName"
+  }
 }
