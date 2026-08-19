@@ -1,0 +1,42 @@
+[
+  {
+    "name": "官方样例1 全奇",
+    "input": "1\n3\n5 3 9\n",
+    "expected": "9\n"
+  },
+  {
+    "name": "官方样例2",
+    "input": "1\n2\n3 2\n",
+    "expected": "5\n"
+  },
+  {
+    "name": "官方样例3",
+    "input": "1\n4\n1 2 2 1\n",
+    "expected": "5\n"
+  },
+  {
+    "name": "官方样例4",
+    "input": "1\n5\n5 4 3 2 9\n",
+    "expected": "21\n"
+  },
+  {
+    "name": "双奇双偶",
+    "input": "1\n4\n1 1 2 2\n",
+    "expected": "5\n"
+  },
+  {
+    "name": "全偶",
+    "input": "1\n2\n2 2\n",
+    "expected": "2\n"
+  },
+  {
+    "name": "全奇 n=3",
+    "input": "1\n3\n1 1 1\n",
+    "expected": "1\n"
+  },
+  {
+    "name": "奇多偶少",
+    "input": "1\n4\n1 1 1 2\n",
+    "expected": "3\n"
+  }
+]
