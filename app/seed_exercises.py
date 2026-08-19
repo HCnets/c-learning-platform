@@ -371,6 +371,48 @@ int main() {
         {"name": "含负数", "input": "4\n10 -2 0 7\n", "expected": "-2 0 7 10\n"},
         {"name": "n=1", "input": "1\n5\n", "expected": "5\n"},
     ]),
+
+    # ---- 校赛真题 ----
+
+    "sc1-1": ("""\
+// 校赛真题①：游戏王锦标赛（思维/签到题）
+// 题意：n 个玩家排成一行，第 i 和 i+1 名玩家比赛（共 n-1 场）。
+//       a[i]=0 表示该玩家没赢过任何比赛；a[i]=1 表示至少赢过一场。
+//       若存在"必撒谎"的人（即任何比赛结果都无法同时满足所有报告），输出 YES。
+// 输入：第一行 t，每组：n + n 个 a[i]
+// 输出：每组一行 YES 或 NO
+// 例：输入 3 / 0 1 0 -> NO（2号可连胜1、3号，全部属实）
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        vector<int> a(n);
+        for (int i = 0; i < n; i++) cin >> a[i];
+
+        // TODO: 判断是否必有人撒谎
+        // 提示1：相邻两个 0 -> 他们之间的比赛两人都要输，矛盾
+        // 提示2：全部都是 1 -> 1号只打一场必须赢，n号只打一场必须赢，
+        //        中间的"胜利链"推到最后一对必然冲突
+
+        cout << "NO" << endl;  // 改这里
+    }
+    return 0;
+}
+""", [
+        {"name": "官方样例", "input": "6\n3\n0 1 0\n2\n0 0\n2\n1 1\n4\n0 1 1 1\n4\n1 0 0 1\n7\n0 1 0 1 0 1 0\n", "expected": "NO\nYES\nYES\nNO\nYES\nNO\n"},
+        {"name": "n=2 全 1", "input": "1\n2\n1 1\n", "expected": "YES\n"},
+        {"name": "n=2 单胜", "input": "2\n2\n1 0\n2\n0 1\n", "expected": "NO\nNO\n"},
+        {"name": "n=3 全 1", "input": "1\n3\n1 1 1\n", "expected": "YES\n"},
+        {"name": "全 1 长链", "input": "1\n5\n1 1 1 1 1\n", "expected": "YES\n"},
+        {"name": "左端 1 链", "input": "2\n4\n1 1 1 0\n5\n1 1 1 1 0\n", "expected": "NO\nNO\n"},
+        {"name": "中间 0 隔开", "input": "2\n7\n1 1 1 0 1 1 1\n6\n1 0 1 1 0 1\n", "expected": "NO\nNO\n"},
+        {"name": "相邻双 0 混合", "input": "2\n8\n1 1 0 0 1 1 1 1\n6\n1 1 1 0 0 1\n", "expected": "YES\nYES\n"},
+    ]),
 }
 
 

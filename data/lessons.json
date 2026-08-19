@@ -128,6 +128,14 @@
         {"id": "cpp1-2", "title": "cpp1-2 练习：A+B Problem（竞赛第一题）"},
         {"id": "cpp1-3", "title": "cpp1-3 练习：vector 排序"}
       ]
+    },
+    {
+      "id": "sc1",
+      "title": "校赛冲刺（往届真题演练）",
+      "language": "cpp",
+      "lessons": [
+        {"id": "sc1-1", "title": "校赛真题① 游戏王锦标赛（思维/签到题）"}
+      ]
     }
   ]
 }
