@@ -325,6 +325,52 @@ n = int(input())
         {"name": "n=100", "input": "100\n", "expected": "5050\n"},
         {"name": "n=1", "input": "1\n", "expected": "1\n"},
     ]),
+
+    # ---- C++ 竞赛入门 ----
+
+    "cpp1-2": ("""\
+// A+B Problem —— 竞赛界第一题（洛谷 P1001 / 牛客 / Codeforces 都有它）
+// 输入：两个整数 a b
+// 输出：a + b
+// 例：输入 1 2，输出 3
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int a, b;
+    cin >> a >> b;
+    // TODO: 输出 a + b
+    return 0;
+}
+""", [
+        {"name": "1+2", "input": "1 2\n", "expected": "3\n"},
+        {"name": "负数", "input": "-5 8\n", "expected": "3\n"},
+        {"name": "大数", "input": "100000 200000\n", "expected": "300000\n"},
+    ]),
+
+    "cpp1-3": ("""\
+// 排序 —— vector + sort（竞赛最常用组合）
+// 输入：第一行 n，第二行 n 个整数
+// 输出：升序排序，空格分隔
+// 例：输入 3 / 3 1 2，输出 1 2 3
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+
+    // TODO: 用 sort 排序并输出（空格分隔，末尾换行）
+
+    return 0;
+}
+""", [
+        {"name": "3 1 2", "input": "3\n3 1 2\n", "expected": "1 2 3\n"},
+        {"name": "含负数", "input": "4\n10 -2 0 7\n", "expected": "-2 0 7 10\n"},
+        {"name": "n=1", "input": "1\n5\n", "expected": "5\n"},
+    ]),
 }
 
 
@@ -344,6 +390,8 @@ def main():
             else:
                 if lang == "python":
                     template = f"# {lesson['title']}\n# 在这里编写你的 Python 代码\n\n"
+                elif lang == "cpp":
+                    template = f"// {lesson['title']}\n// 在这里编写你的 C++ 代码\n\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {{\n    // TODO\n    return 0;\n}}\n"
                 else:
                     template = TEMPLATE.format(title=lesson["title"])
                 tests = []

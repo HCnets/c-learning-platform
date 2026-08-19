@@ -136,14 +136,11 @@ def api_reset(lesson_id: str):
     """把课时代码恢复为初始模板。"""
     if get_lesson(lesson_id) is None:
         raise HTTPException(404, "课时不存在")
-    template = EXERCISES / lesson_id / "template.c"
-    template_py = EXERCISES / lesson_id / "template.py"
-    if template.exists():
-        code = template.read_text(encoding="utf-8")
-    elif template_py.exists():
-        code = template_py.read_text(encoding="utf-8")
-    else:
+    lang = lesson_lang(lesson_id, load_lessons())
+    template = EXERCISES / lesson_id / f"template.{LANGUAGES[lang]['ext']}"
+    if not template.exists():
         raise HTTPException(404, "该课时没有初始模板")
+    code = template.read_text(encoding="utf-8")
     p = code_path(lesson_id)
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(code, encoding="utf-8")

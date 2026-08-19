@@ -118,6 +118,16 @@
         {"id": "py1-1", "title": "py1-1 第一个 Python 程序"},
         {"id": "py1-2", "title": "py1-2 练习：计算 1 到 n 的和"}
       ]
+    },
+    {
+      "id": "cpp1",
+      "title": "C++ 竞赛入门（ACM / 蓝桥杯备战）",
+      "language": "cpp",
+      "lessons": [
+        {"id": "cpp1-1", "title": "cpp1-1 认识 C++：cin/cout 与 STL"},
+        {"id": "cpp1-2", "title": "cpp1-2 练习：A+B Problem（竞赛第一题）"},
+        {"id": "cpp1-3", "title": "cpp1-3 练习：vector 排序"}
+      ]
     }
   ]
 }

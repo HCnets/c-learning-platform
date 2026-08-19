@@ -8,6 +8,7 @@
   "ruff.lint.run": "onSave",
   "code-runner.executorMap": {
     "c": "cd $dir && set PATH=C:\\msys64\\ucrt64\\bin;%PATH% && C:/msys64/ucrt64/bin/gcc.exe -std=c11 -Wall -Wextra $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe",
+    "cpp": "cd $dir && set PATH=C:\\msys64\\ucrt64\\bin;%PATH% && C:/msys64/ucrt64/bin/g++.exe -std=c++17 -Wall -Wextra $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe",
     "python": "cd $dir && python $fileName"
   }
 }

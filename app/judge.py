@@ -37,6 +37,15 @@ def find_gcc() -> str:
     return str(default) if default.exists() else "gcc"
 
 
+def find_gpp() -> str:
+    """C++ 编译器，逻辑同 find_gcc。"""
+    found = shutil.which("g++")
+    if found:
+        return found
+    default = Path(r"C:\msys64\ucrt64\bin\g++.exe")
+    return str(default) if default.exists() else "g++"
+
+
 def toolchain_env() -> dict:
     """gcc 编译和生成的 exe 运行都依赖 ucrt64 的 DLL（如 libgcc_s_seh-1.dll），
     它们靠 PATH 查找，这里把工具链 bin 目录注入子进程环境，避免静默失败。"""
@@ -63,6 +72,13 @@ LANGUAGES = {
         "compile": None,  # 解释执行，跳过编译
         "run": lambda src: [sys.executable, str(src)],
         "timeout": 10,
+    },
+    "cpp": {
+        "ext": "cpp",
+        "display": "C++",
+        "compile": lambda src, out: [find_gpp(), "-std=c++17", "-Wall", "-Wextra", "-O2", "-o", str(out), str(src)],
+        "run": lambda exe: [str(exe)],
+        "timeout": RUN_TIMEOUT,
     },
 }
 

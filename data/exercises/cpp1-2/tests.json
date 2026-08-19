@@ -1,0 +1,17 @@
+[
+  {
+    "name": "1+2",
+    "input": "1 2\n",
+    "expected": "3\n"
+  },
+  {
+    "name": "负数",
+    "input": "-5 8\n",
+    "expected": "3\n"
+  },
+  {
+    "name": "大数",
+    "input": "100000 200000\n",
+    "expected": "300000\n"
+  }
+]
