@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竞赛英语高频词表</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .sheet { max-width: 860px; margin: 0 auto; padding: 24px; }
+  .sheet h2 { margin: 26px 0 10px; font-size: 17px; border-left: 4px solid var(--accent); padding-left: 10px; }
+  .sheet p.tip { background: var(--accent-soft); border-radius: 8px; padding: 12px 14px; font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  th { background: #f0f0ec; font-weight: 600; }
+  td.en { font-family: Consolas, monospace; width: 42%; }
+  td.note { color: var(--muted); font-size: 12.5px; }
+  a.back { font-size: 13px; color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">竞赛英语高频词表</div>
+  <div class="stats"><a class="back" href="/">← 返回学习平台</a></div>
+</header>
+
+<div class="sheet">
+
+<p class="tip">📖 <b>用法</b>：刷 CF/ICPC 英文题时对照。建议顺序：<b>先硬读英文猜意思 → 再看本表 → 最后对照洛谷中文题面</b>。竞赛英语词汇量很小（约 200 词），刷 30~50 题后基本无感。</p>
+
+<h2>① 数字与比较</h2>
+<table>
+<tr><th>English</th><th>含义</th><th>备注</th></tr>
+<tr><td class="en">integer / positive integer</td><td>整数 / 正整数</td><td>positive &gt; 0</td></tr>
+<tr><td class="en">non-negative</td><td>非负的（≥0）</td><td class="note">注意不是 positive</td></tr>
+<tr><td class="en">odd / even</td><td>奇数 / 偶数</td><td></td></tr>
+<tr><td class="en">at most / at least</td><td>至多（≤）/ 至少（≥）</td><td class="note">高频易错，注意区分</td></tr>
+<tr><td class="en">strictly greater / less</td><td>严格大于 / 小于（不含等）</td><td></td></tr>
+<tr><td class="en">between … inclusive</td><td>在 … 之间（含端点）</td><td class="note">inclusive = 闭区间</td></tr>
+<tr><td class="en">exactly once / at least once</td><td>恰好一次 / 至少一次</td><td></td></tr>
+<tr><td class="en">distinct</td><td>互不相同的</td><td class="note">all distinct = 两两不同</td></tr>
+<tr><td class="en">pairwise distinct</td><td>两两不同</td><td></td></tr>
+<tr><td class="en">adjacent / consecutive</td><td>相邻的 / 连续的</td><td class="note">consecutive 常指索引连续</td></tr>
+<tr><td class="en">modulo / mod</td><td>取模（余数）</td><td>a mod b</td></tr>
+<tr><td class="en">divisible</td><td>可整除的</td><td>divisible by k</td></tr>
+<tr><td class="en">remainder</td><td>余数</td><td></td></tr>
+<tr><td class="en">prime</td><td>素数</td><td></td></tr>
+<tr><td class="en">bitwise XOR / bitwise AND</td><td>按位异或 ⊕ / 按位与</td><td>XOR 题高频</td></tr>
+<tr><td class="en">permutation</td><td>排列（1..n 各一次）</td><td class="note">不是"置换"的日常义</td></tr>
+</table>
+
+<h2>② 范围与约束</h2>
+<table>
+<tr><th>English</th><th>含义</th><th>备注</th></tr>
+<tr><td class="en">constraint</td><td>约束（数据范围）</td><td>看 constraints 段决定算法</td></tr>
+<tr><td class="en">It is guaranteed that …</td><td>保证 … 成立</td><td class="note">读完可少处理很多边界</td></tr>
+<tr><td class="en">the sum of … over all test cases does not exceed</td><td>所有测试点总和不超过</td><td class="note">总复杂度按总和算</td></tr>
+<tr><td class="en">each test case / multiple test cases</td><td>每个测试点 / 多组数据</td><td>第一行 t = 组数</td></tr>
+<tr><td class="en">arbitrary number of times</td><td>任意多次</td><td>possibly zero = 可以为 0 次</td></tr>
+<tr><td class="en">initially</td><td>初始时</td><td></td></tr>
+<tr><td class="en">empty</td><td>空的</td><td>empty deck / empty pile</td></tr>
+<tr><td class="en">remove / delete / erase</td><td>移除 / 删除 / 擦除</td><td></td></tr>
+<tr><td class="en">remaining</td><td>剩余的</td><td>the remaining elements</td></tr>
+<tr><td class="en">insert</td><td>插入</td><td></td></tr>
+</table>
+
+<h2>③ 序列与结构</h2>
+<table>
+<tr><th>English</th><th>含义</th><th>备注</th></tr>
+<tr><td class="en">array / sequence</td><td>数组 / 序列</td><td></td></tr>
+<tr><td class="en">subarray / segment</td><td>连续子数组 / 区间</td><td class="note">必须连续</td></tr>
+<tr><td class="en">subsequence</td><td>子序列（可不连续）</td><td class="note">高频易混，和 subarray 区分</td></tr>
+<tr><td class="en">prefix / suffix</td><td>前缀 / 后缀</td><td></td></tr>
+<tr><td class="en">sorted / ascending / descending</td><td>排序的 / 升序 / 降序</td><td>non-decreasing = 不降序</td></tr>
+<tr><td class="en">non-decreasing / non-increasing</td><td>不降 / 不增（允许相等）</td><td></td></tr>
+<tr><td class="en">median / average</td><td>中位数 / 平均数</td><td></td></tr>
+<tr><td class="en">minimum / maximum</td><td>最小 / 最大</td><td>minimize / maximize 动词</td></tr>
+<tr><td class="en">balance / balanced</td><td>平衡的</td><td></td></tr>
+</table>
+
+<h2>④ 图论</h2>
+<table>
+<tr><th>English</th><th>含义</th><th>备注</th></tr>
+<tr><td class="en">graph / tree</td><td>图 / 树</td><td>tree = 连通无环</td></tr>
+<tr><td class="en">vertex (pl. vertices) / node</td><td>顶点 / 节点</td><td></td></tr>
+<tr><td class="en">edge</td><td>边</td><td>undirected = 无向</td></tr>
+<tr><td class="en">connected</td><td>连通的</td><td></td></tr>
+<tr><td class="en">simple path</td><td>简单路径（不重复经过点）</td><td>树上唯一</td></tr>
+<tr><td class="en">cycle</td><td>环</td><td></td></tr>
+<tr><td class="en">leaf</td><td>叶子节点（度 1）</td><td></td></tr>
+<tr><td class="en">root</td><td>根</td><td>rooted tree = 有根树</td></tr>
+<tr><td class="en">degree</td><td>度（边数）</td><td></td></tr>
+<tr><td class="en">neighbor</td><td>邻居</td><td></td></tr>
+<tr><td class="en">power of 2</td><td>2 的幂</td><td>n is a power of 2</td></tr>
+</table>
+
+<h2>⑤ 字符串</h2>
+<table>
+<tr><th>English</th><th>含义</th><th>备注</th></tr>
+<tr><td class="en">binary string</td><td>二进制串（只含 0/1）</td><td></td></tr>
+<tr><td class="en">character / char</td><td>字符</td><td></td></tr>
+<tr><td class="en">palindrome</td><td>回文</td><td></td></tr>
+<tr><td class="en">lexicographically</td><td>字典序地</td><td>lexicographically smaller = 字典序更小</td></tr>
+<tr><td class="en">uppercase / lowercase</td><td>大写 / 小写</td><td></td></tr>
+<tr><td class="en">separated by spaces</td><td>空格分隔</td><td>space-separated integers</td></tr>
+<tr><td class="en">in any order / any case</td><td>任意顺序 / 任意大小写</td><td>输出容错说明</td></tr>
+</table>
+
+<h2>⑥ 操作动词（读题核心）</h2>
+<table>
+<tr><th>English</th><th>含义</th><th>备注</th></tr>
+<tr><td class="en">choose / select</td><td>选择</td><td></td></tr>
+<tr><td class="en">place / put</td><td>放置</td><td>on top of = 放在顶部</td></tr>
+<tr><td class="en">decrease / increase</td><td>减少 / 增加</td><td>by 1 = 每次 1</td></tr>
+<tr><td class="en">swap</td><td>交换（两个位置）</td><td></td></tr>
+<tr><td class="en">replace</td><td>替换</td><td></td></tr>
+<tr><td class="en">perform an operation</td><td>执行一次操作</td><td></td></tr>
+<tr><td class="en">construct / recover</td><td>构造 / 恢复</td><td>构造题标志词</td></tr>
+<tr><td class="en">prove</td><td>证明</td><td>determine whether… = 判断是否</td></tr>
+<tr><td class="en">cancel / invalid</td><td>取消 / 无效</td><td></td></tr>
+<tr><td class="en">tie / tiebreaker</td><td>打平 / 决胜规则</td><td></td></tr>
+</table>
+
+<h2>⑦ 条件与输出（句式模板）</h2>
+<table>
+<tr><th>English</th><th>含义</th></tr>
+<tr><td class="en">You are given …</td><td>给你 …（题面开头标配）</td></tr>
+<tr><td class="en">determine whether it is possible</td><td>判断是否可能</td></tr>
+<tr><td class="en">if and only if</td><td>当且仅当</td></tr>
+<tr><td class="en">otherwise</td><td>否则</td></tr>
+<tr><td class="en">if there are multiple solutions, output any</td><td>多解输出任意一个（构造题）</td></tr>
+<tr><td class="en">output -1 if it is impossible</td><td>不可能时输出 -1</td></tr>
+<tr><td class="en">it can be shown that …</td><td>可以证明 …（暗示解法方向）</td></tr>
+<tr><td class="en">print the answer in any case</td><td>大小写任意（YES/yes 都行）</td></tr>
+<tr><td class="en">each line contains …</td><td>每行包含 …</td></tr>
+<tr><td class="en">followed by n lines</td><td>接下来 n 行</td></tr>
+</table>
+
+<h2>⑧ 高频易错辨析</h2>
+<table>
+<tr><th>词对</th><th>区别</th></tr>
+<tr><td class="en">subarray vs subsequence</td><td>子数组必须连续；子序列可跳着选</td></tr>
+<tr><td class="en">at most vs at least</td><td>至多（上限）vs 至少（下限），最易看反</td></tr>
+<tr><td class="en">strictly vs non-</td><td>strictly increasing 严格递增；non-decreasing 可相等</td></tr>
+<tr><td class="en">positive vs non-negative</td><td>&gt;0 vs ≥0</td></tr>
+<tr><td class="en">minimize vs minimize the maximum</td><td>后者是"最小化最大值"（二分标志词）</td></tr>
+<tr><td class="en">empty vs zero</td><td>空序列 vs 值为 0</td></tr>
+<tr><td class="en">round vs step</td><td>round 轮（每轮多人操作）；step 步（单人操作）</td></tr>
+</table>
+
+<p class="tip">💡 <b>策略</b>：读题顺序 = ① 输入格式（数据范围决定算法）→ ② 操作规则 → ③ 要输出什么。读不懂的专有名词（如 Breach of Faith 这种歌名标题）直接无视，标题不影响做题。</p>
+
+</div>
+</body>
+</html>
